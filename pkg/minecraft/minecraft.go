@@ -28,6 +28,10 @@ func NewConnection(c Config) (*Connection, error) {
 }
 
 func (c *Connection) CloseConnection() error {
+	if c.Client == nil {
+		return &ConnectionError{Reason: "Client not available"}
+	}
+
 	return c.Client.Close()
 }
 

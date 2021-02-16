@@ -24,9 +24,15 @@ func main() {
 		Password: conf.RconPassword,
 	})
 
+
+
 	if err != nil {
 		zap.L().Warn("Could not connect to Minecraft RCON.", zap.Error(err))
+	} else {
+		zap.L().Info("Minecraft connection was established.")
 	}
+
+	defer mC.CloseConnection()
 
 	b := bot.New(bot.Config{
 		Token:      conf.BotToken,

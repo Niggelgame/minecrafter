@@ -29,7 +29,6 @@ type Ctx struct {
 }
 
 func (c *Ctx) SendHelp() {
-
 	e := &discordgo.MessageEmbed{
 		Title: fmt.Sprintf("%s - Hilfe", c.Command.Name),
 		Description: c.Command.Description,
