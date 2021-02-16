@@ -10,7 +10,7 @@ func NewMinecraftCommand(connection *minecraft.Connection) *Command {
 		Name:        "CommandExecution",
 		Description: "Execute a minecraft command",
 		Usage:       "",
-		Invocations: []string{"e", "execute", "run"},
+		Invocations: []string{"e", "execute", "run", "eval"},
 		SubCommands: []*Command{},
 		Process: func(ctx *Ctx) error {
 			return minecraftCommandHandler(ctx, connection)

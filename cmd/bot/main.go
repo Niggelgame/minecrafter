@@ -38,5 +38,4 @@ func main() {
 	zap.L().Info("Bot started.")
 	zap.L().Fatal("Error while serving bot.", zap.Error(b.Start()))
 	// }()
-
 }

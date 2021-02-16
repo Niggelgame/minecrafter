@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"github.com/niggelgame/minecrafter/pkg/commands"
 	"github.com/niggelgame/minecrafter/pkg/minecraft"
@@ -21,6 +22,7 @@ type Bot struct {
 	commandHandler  *commands.CommandHandler
 	commandRegistry *commands.CommandRegistry
 	connection      *minecraft.Connection
+	config          *Config
 }
 
 func New(conf Config) *Bot {
@@ -37,6 +39,7 @@ func New(conf Config) *Bot {
 		commandHandler:  commandHandler,
 		commandRegistry: commandRegistry,
 		connection:      conf.Connection,
+		config:          &conf,
 	}
 
 	b.registerHandler()
@@ -50,6 +53,11 @@ func (b *Bot) Start() error {
 	if err != nil {
 		zap.L().Fatal("Error opening Connection.", zap.Error(err))
 		return err
+	}
+
+	err = b.session.UpdateListeningStatus(fmt.Sprintf("%shelp", b.config.Prefix))
+	if err != nil {
+
 	}
 
 	// Wait here until CTRL-C or other term signal is received.
@@ -75,4 +83,5 @@ func (b *Bot) registerHandler() {
 func (b *Bot) registerCommands() {
 	b.commandRegistry.RegisterCommand(commands.NewMinecraftCommand(b.connection))
 	b.commandRegistry.RegisterCommand(commands.NewWhitelistCommand(b.connection))
+	b.commandRegistry.RegisterCommand(commands.NewHelpCommand())
 }

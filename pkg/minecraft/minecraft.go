@@ -27,6 +27,10 @@ func NewConnection(c Config) (*Connection, error) {
 	return &Connection{Client: client, config: c}, nil
 }
 
+func (c *Connection) CloseConnection() error {
+	return c.Client.Close()
+}
+
 func (c *Connection) reconnect() (e error) {
 	client, e := net.DialRCON(c.config.Address, c.config.Password)
 	if e != nil {
